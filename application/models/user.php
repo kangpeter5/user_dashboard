@@ -46,14 +46,15 @@ class User extends CI_Model {
 		$user_get_query = "SELECT * FROM users WHERE id = ?";
 		$id = array('id');
 
-		$update_query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, updated_at = ? WHERE id = ?";
-		$value = array($post['first_name'], $post['last_name'], $post['email'], $post['password'], date("Y-m-d, H:i:s"), $id);
+		$update_query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, updated_at = ?, description = ? WHERE id = ?";
+		$value = array($post['first_name'], $post['last_name'], $post['email'], $post['password'], date("Y-m-d, H:i:s"), $post['description'], $id);
 
 		$this->db->query($update_query, $value);
 	}
 
 	function delete_user_by_id($id)
 	{
+		// var_dump($id); die("this is in the model");
 		$query_to_delete = "DELETE FROM users WHERE id = ?";
 		$this->db->query($query_to_delete, $id);
 	}

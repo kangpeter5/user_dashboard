@@ -71,6 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <label>Email: <label><input type="text" name="email"  />
           <label>Password: <label><input type="password" name="password" />
           <label>Confirm Password: <label><input type="password" name="confirm_password" />
+          <label>Description: <label><textarea name="description" cols='100' rows='7' value="<?php echo $user['description'] ; ?>"/></textarea>
           <button type='submit' class="btn">Register</button>
         </form>
 

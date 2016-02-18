@@ -65,19 +65,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           echo "<p> " . $this->session->flashdata("edit_error") . "</p>";
         }
 ?>
-        <form action="/users/edit_process" method="post">
-          <label>Email: <label><input type="text" name="email"  />
-          <label>First Name: <label><input type="text" name="first_name"  >
-          <label>Last Name: <label><input type="text" name="last_name" >
-          <button type='submit' class="btn">Save</button>
-        </form>
+      <div class="row">
 
-        <form action="/users/edit_process" method="post">
-          <label>Password: <label><input type="password" name="password" />
-          <label>Confirm Password: <label><input type="password" name="confirm_password" />
-          <button type='submit' class="btn">Update Password</button>
-        </form>
-        
+        <div class="span3">
+          <form action="/users/edit_process" method="post">
+            <label>Email: <label><input type="text" name="email" value="<?php echo $user['email'] ; ?>"/>
+            <label>First Name: <label><input type="text" name="first_name" value="<?php echo $user['first_name'] ; ?>"  />
+            <label>Last Name: <label><input type="text" name="last_name" value="<?php echo $user['last_name'] ; ?>" />
+            <button type='submit' class="btn">Save</button>
+          </form>
+        </div>
+
+        <div class="span3">
+          <form action="/users/edit_process" method="post">
+            <label>Password: <label><input type="password" name="password" />
+            <label>Confirm Password: <label><input type="password" name="confirm_password" />
+            <button type='submit' class="btn">Update Password</button>
+          </form>
+        </div>
+
+        <div class="span3">
+          <form action="/users/edit_process" method="post">
+            <label>Description: <label><textarea name="description" cols='100' rows='7' value="<?php echo $user['description'] ; ?>"/></textarea>
+            <button type='submit' class="btn">Update Password</button>
+          </form>
+        </div>
+      </div>
+
       </div>
       <hr>
 

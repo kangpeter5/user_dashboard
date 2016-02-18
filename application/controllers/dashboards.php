@@ -22,7 +22,14 @@ class Dashboards extends Main {
 	{
 		$user = $this->User->get_all_users();
 		$info['users'] = $user;
-		$this->load->view('dashboard_view', $info);
+		$this->load->view('dashboard_user_view', $info);
+	}
+
+	public function list_users_admin()
+	{
+		$user = $this->User->get_all_users();
+		$info['users'] = $user;
+		$this->load->view('dashboard_admin_view', $info);
 	}
 
 	public function profile($id)

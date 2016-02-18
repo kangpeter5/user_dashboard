@@ -62,20 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
         <h1>Manage Users</h1>
-<?php
-        foreach ($users as $user) 
-        {
-          if($user['user_level']=="9")
-          {
-?>
-            <form class="form pull-right" action="/users/addnew">
-              <button type="submit" class="btn">Add New</button>
-            </form>      
-<?php
-          }
-        }
-?>
-        
+        <br>
         <table class="table table-striped">
         <thead>
           <th>ID</th>
@@ -83,7 +70,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <th>Email</th>
           <th>User level</th>
           <th>Created At </th>
-          <th>Actions </th>
         </thead>
         <tbody>
 <?php 

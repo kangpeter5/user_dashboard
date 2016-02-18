@@ -8,7 +8,7 @@ class Users extends Main {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('user');
+		$this->load->model('User');
 	}
 
 	public function login()
@@ -31,7 +31,7 @@ class Users extends Main {
 		else
 		{
 			$email = $this->input->post('email');
-			$user = $this->user->get_user_by_email($email);
+			$user = $this->User->get_user_by_email($email);
 			$password = md5($this->input->post('password'));
 
 			if ($user && $user['password'] == $password) 
@@ -45,7 +45,14 @@ class Users extends Main {
 				);
 
 				$this->session->set_userdata($user);
-				redirect("/dashboards/list_users");
+				if ($user['user_level']==9) 
+				{
+					redirect("/dashboards/list_users_admin");
+				}
+				else
+				{
+					redirect("/dashboards/list_users");
+				}
 			}
 			else
 			{
@@ -66,7 +73,7 @@ class Users extends Main {
 
    		$this->form_validation->set_rules("first_name", "First Name", "trim|required");
 		$this->form_validation->set_rules("last_name", "Last Name", "trim|required");
-		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email|is_unique[users.email]|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|min_length[8]|required|matches[confirm_password]|md5');
 		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|md5');
 
@@ -81,9 +88,10 @@ class Users extends Main {
 		    $last_name = $this->input->post('last_name');
 		    $email = $this->input->post('email');
         	$password = md5($this->input->post('password'));
+        	$description = $this->input->post('description');
 
         	$post = $this->input->post();
-			$registered_user = $this->user->register_user($post);
+			$registered_user = $this->User->register_user($post);
 
 			$this->session->set_flashdata("registered_user", $post);
 			redirect('/dashboards/list_users');
@@ -99,9 +107,9 @@ class Users extends Main {
 	{
 		$this->load->library("form_validation");
 
-   		$this->form_validation->set_rules("first_name", "First Name", "trim");
-		$this->form_validation->set_rules("last_name", "Last Name", "trim");
-		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
+   		$this->form_validation->set_rules("first_name", "First Name", "trim|required");
+		$this->form_validation->set_rules("last_name", "Last Name", "trim|required");
+		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email|is_unique[users.email]|required');
 		$this->form_validation->set_rules('password', 'Password', 'trim|min_length[8]|required|matches[confirm_password]|md5');
 		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|md5');
 
@@ -116,9 +124,10 @@ class Users extends Main {
 		    $last_name = $this->input->post('last_name');
 		    $email = $this->input->post('email');
         	$password = md5($this->input->post('password'));
+        	$description = $this->input->post('description');
 
         	$post = $this->input->post();
-			$edited_user = $this->user->update_user($post);
+			$edited_user = $this->User->update_user($post);
 
 			$this->session->set_flashdata("edited_user", $post);
 			redirect('/dashboards/list_users');
@@ -130,11 +139,10 @@ class Users extends Main {
 		$this->load->view('addnew_view');
 	}
 
-	public function delete_user()
+	public function delete_user($id)
 	{
-		$id = $this->session->userdata('id');
 		$this->User->delete_user_by_id($id);
-		redirect('/dashboards/list_users');
+		redirect('/dashboards/list_users_admin');
 	}
 }
 
